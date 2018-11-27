@@ -1,0 +1,105 @@
+
+        <div class="wrapper">
+            <div >
+                <!--Contenido del menu-->
+                <section class="content">
+                    <!-- Main row -->
+                    <div class="row">
+                        <!-- Left col -->
+                        <div class="col-md-8">
+                            <!-- /.box -->
+                            <div class="row">
+                                
+                                <!-- CAJA QUÉ ESTÁS PENSANDO? -->
+                                <div class="col-md-12">     
+                                    <div class="box box-primary direct-chat direct-chat-warning">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title">¿Qué estás pensando?</h3>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        
+                                        <!-- /.box-body -->
+                                        <div class="box-footer">
+                                            <form #publicacionForm="ngForm" (ngSubmit)="publicarpost()">
+                                                <div class="input-group form-group">
+                                                    <textarea name="publicacion" #ptexto="ngModel" [(ngModel)]="publicacion.ptexto"  placeholder="¿Qué estás pensando?" class="form-control" rows="3" required></textarea>
+                                                    <br><br><br><br>
+                                                    <!-- START Input file nuevo diseño .-->
+                                                    <input type="file" name="foto" #picture="ngModel" [(ngModel)]="filefoto" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected"/>
+                                                    <!-- END Input file nuevo diseño .-->
+                                                    <br>
+                                                    <button type="submit" name="publicar" class="btn btn-primary btn-flat">Publicar</button>
+                                                </div>
+                                            </form>
+                                        
+                                        </div> <!-- /.box-footer-->
+                                    </div><!--/.direct-chat -->
+                                </div>   <!-- /.col -->    
+                            </div> <!-- /.row -->
+                        </div>
+                        
+                        <div class="col-md-4">   
+                            
+                            <!-- PRODUCT LIST -->
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Solicitudes de amistad</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <ul class="products-list product-list-in-box">
+                                        
+                                        <li class="item">
+                                            <div class="product-img">
+                                                <img src="" alt="Product Image">
+                                            </div>
+                                            <div class="product-info">
+                                                <a href="#"><span class="label label-success pull-right">Aceptar</span></a><!--href a solicitud-->
+                                                <br>
+                                                <a href="#"><span class="label label-danger pull-right">Rechazar</span></a>
+                                                
+                                            </div>
+                                        </li><!-- /.item -->   
+                                    </ul>
+                                </div> <!-- /.box-body -->
+                                
+                                <div class="box-footer text-center">
+                                    <a href="" class="uppercase">Ver todas las solicitudes</a>
+                                 
+                                </div> <!-- /.box-footer -->
+                            </div>          <!-- /.box -->
+                        </div> <!-- /.col -->
+                    </div>      <!-- /.row -->
+
+                    <!-- codigo scroll -->
+                    <div class="scroll box-body" *ngFor="let publicacion of listpublicaciones" >
+                        <div  class="box box-primary">
+                            <div class="box-header with-border">
+                                <img *ngIf="publicacion.user_id.foto" class="box-title thumbnail img-thumbnail img-responsive" width="100px" height="100px" src="{{url+'/avatar/'+publicacion.user_id.foto}}">
+                                <img *ngIf="!publicacion.user_id.foto" class="box-title thumbnail img-thumbnail img-responsive" width="100px" height="100px" src="{{url+'/avatar/'+'defect.jpg'}}">
+                                <h4 class="box-title"> {{publicacion.user_id.name}} </h4> <h6 class="box-title">{{publicacion.pfecha | date:'dd MMMM yyyy, HH:mm'}}</h6>
+                                <h3 > {{publicacion.ptexto}} </h3>
+                            </div>
+                            <hr>
+                            <form class="box-footer" #loginForm="ngForm" (ngSubmit)="enviarComentario(publicacion._id)">
+                                <input type="text" class="form-control" placeholder="comenta" name="ctexto" #ctexto="ngModel" [(ngModel)]="comentario.ctexto">
+                                <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
+                                <br>
+                                <button type="submit" name="comentar" class="btn btn-primary btn-right">Comentar</button>
+                            </form>
+                            <!--Muestra los comentarios-->
+                            <div id="com" class="box-header with-border" *ngFor="let comentario of publicacion.comentarios">
+                                <img *ngIf="comentario.user_id.foto" class="box-title thumbnail img-thumbnail img-responsive" width="100px" height="100px" src="{{url+'/avatar/'+comentario.user_id.foto}}">
+                                <img *ngIf="!comentario.user_id.foto" class="box-title thumbnail img-thumbnail img-responsive" width="100px" height="100px" src="{{url+'/avatar/'+'defect.jpg'}}">
+                                <h4 class="box-title">{{comentario.user_id.name}}</h4><h6 class="box-title">{{comentario.cfecha | date:'dd MMMM yyyy, HH:mm'}}</h6>
+                                <h5>{{comentario.ctexto}}</h5> 
+                            </div>
+                        </div>
+                    </div> 
+                    <!--termina la publicacion-->
+
+                </section><!--Fin content-->     
+            </div><!--Fin content wrapper-->
+        </div><!--Fin wrapper-->
